@@ -17,7 +17,8 @@ const HelperText = () => {
       <SaveResponse
         onSubmit={onSubmit}
         display={
-          (gratitudeMessageCookie.length <= 0 && gratitudeMessage.length > 0) ||
+          gratitudeMessageCookie.length <= 0 &&
+          gratitudeMessage.length > 0 &&
           !done
         }
       />
@@ -33,10 +34,10 @@ const SaveResponse = ({
   display: boolean;
 }) => {
   return (
-    <button type="submit" onClick={onSubmit}>
+    <button type="submit" onClick={onSubmit} disabled={!display}>
       <kbd
         className={`transition-opacity duration-300 p-3 rounded-md w-fit h-6 flex items-center justify-center bg-gray-100 font-medium font-sans ${
-          display ? "opacity-100" : "opacity-0"
+          display ? "opacity-100 " : "opacity-0 pointer-events-none h-6"
         }`}
       >
         Press Enter to Save
