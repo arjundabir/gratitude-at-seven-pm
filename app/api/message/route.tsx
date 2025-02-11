@@ -17,9 +17,3 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ message }, { status: 201 });
 }
-
-export async function DELETE() {
-  const cookieStore = await cookies();
-  cookieStore.delete("gratitudeMessage");
-  return NextResponse.json({ status: 200 });
-}

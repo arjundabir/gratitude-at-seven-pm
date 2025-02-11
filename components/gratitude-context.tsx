@@ -1,10 +1,11 @@
 "use client";
 
+import { addGratitudeMsg } from "@/actions";
 import React, { createContext, useState } from "react";
 
 interface GratitudeContextProviderProps {
-  gratitudeMessageCookie?: string;
   children: React.ReactNode;
+  message?: string;
 }
 
 export const GratitudeContext = createContext({
@@ -12,39 +13,26 @@ export const GratitudeContext = createContext({
   setGratitudeMessage: (message: string) => {
     console.log(message);
   },
-  done: false,
-  setDone: (done: boolean) => {
-    console.log(done);
+  // ts-expect-error don't want to specify html element
+  onSubmit: (message: string, e: React.FormEvent) => {
+    console.log(message, e);
   },
-  onSubmit: (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
-    console.log(e);
-  },
-  gratitudeMessageCookie: "",
+  done: true,
 });
 
 const GratitudeContextProvider = ({
-  gratitudeMessageCookie,
   children,
+  message,
 }: GratitudeContextProviderProps) => {
-  const [gratitudeMessage, setGratitudeMessage] = useState(
-    gratitudeMessageCookie || ""
-  );
-  const [done, setDone] = useState(gratitudeMessageCookie ? true : false);
-
-  const onSubmit = async (
-    e: React.FormEvent<HTMLFormElement | HTMLButtonElement>
-  ) => {
+  const [done, setDone] = useState(message ? true : false);
+  const [gratitudeMessage, setGratitudeMessage] = useState(message);
+  // ts-expect-error don't want to specify html element
+  const onSubmit = async (message: string, e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/message", {
-        method: "POST",
-        body: JSON.stringify({ message: gratitudeMessage }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setGratitudeMessage(data.message);
+      const addedMessage = await addGratitudeMsg(message);
+      if (addedMessage) {
+        setGratitudeMessage(addedMessage);
         setDone(true);
       }
     } catch (error) {
@@ -55,17 +43,14 @@ const GratitudeContextProvider = ({
   return (
     <GratitudeContext.Provider
       value={{
-        gratitudeMessage,
+        gratitudeMessage: gratitudeMessage || "",
         setGratitudeMessage,
-        done,
-        setDone,
         onSubmit,
-        gratitudeMessageCookie: gratitudeMessageCookie || "",
+        done,
       }}
     >
-      <div className="w-full">{children}</div>
+      {children}
     </GratitudeContext.Provider>
   );
 };
-
 export default GratitudeContextProvider;

@@ -1,24 +1,42 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { GratitudeContext } from "./gratitude-context";
+
 const GratitudeInput = () => {
-  const { gratitudeMessage, setGratitudeMessage, onSubmit, done } =
+  const { onSubmit, done, gratitudeMessage, setGratitudeMessage } =
     useContext(GratitudeContext);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [gratitudeMessage]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      // ts-expect-error don't want to specify html element
+      onSubmit(gratitudeMessage, e);
+    }
+  };
 
   return (
-    <form onSubmit={onSubmit} className="w-auto">
-      <input
-        autoFocus={!done}
-        type="text"
-        className="outline-none ring-0 bg-transparent disabled:cursor-default min-w-fit"
+    <form
+      onSubmit={(e) => onSubmit(gratitudeMessage, e)}
+      className="inline-flex"
+    >
+      <textarea
+        ref={textareaRef}
+        autoFocus
+        className="outline-none ring-0 bg-transparent disabled:cursor-default w-full resize-none overflow-hidden"
         value={gratitudeMessage}
         disabled={done}
-        onChange={(e) => {
-          if (!done) {
-            setGratitudeMessage(e.target.value);
-          }
-        }}
+        onChange={(e) => setGratitudeMessage(e.target.value)}
+        onKeyDown={handleKeyDown}
+        rows={1}
       />
     </form>
   );

@@ -1,7 +1,7 @@
-import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+import db from "@/lib/db";
 
 export async function GET() {
-  const cookieStore = await cookies();
-  cookieStore.delete("gratitudeMessage");
-  return new Response("Gratitude message cookie deleted");
+  db.clear();
+  return NextResponse.json({ message: "Database cleared" }, { status: 200 });
 }

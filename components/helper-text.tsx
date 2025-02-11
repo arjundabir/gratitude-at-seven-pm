@@ -4,8 +4,7 @@ import React, { useContext } from "react";
 import { GratitudeContext } from "./gratitude-context";
 
 const HelperText = () => {
-  const { done, onSubmit, gratitudeMessage, gratitudeMessageCookie } =
-    useContext(GratitudeContext);
+  const { done, onSubmit, gratitudeMessage } = useContext(GratitudeContext);
 
   return (
     <div
@@ -15,12 +14,8 @@ const HelperText = () => {
     >
       {done && <div className="absolute inset-0 w-full h-full z-10" />}
       <SaveResponse
-        onSubmit={onSubmit}
-        display={
-          gratitudeMessageCookie.length <= 0 &&
-          gratitudeMessage.length > 0 &&
-          !done
-        }
+        onSubmit={(e) => onSubmit(gratitudeMessage, e)}
+        display={gratitudeMessage.length > 0 && !done}
       />
     </div>
   );
@@ -45,5 +40,4 @@ const SaveResponse = ({
     </button>
   );
 };
-
 export default HelperText;
