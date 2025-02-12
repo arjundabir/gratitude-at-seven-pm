@@ -31,7 +31,7 @@ const SaveResponse = ({
   return (
     <button type="submit" onClick={onSubmit} disabled={!display}>
       <kbd
-        className={`transition-opacity duration-300 p-3 rounded-md w-fit h-6 flex items-center justify-center bg-gray-100 font-medium font-sans ${
+        className={`transition-opacity duration-300 p-3 rounded-md w-fit h-6 flex items-center justify-center bg-gray-100 dark:bg-gray-800 dark:text-gray-300 font-medium font-sans ${
           display ? "opacity-100 " : "opacity-0 pointer-events-none h-6"
         }`}
       >
