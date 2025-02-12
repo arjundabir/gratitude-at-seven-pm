@@ -31,7 +31,7 @@ const GratitudeInput = () => {
       <textarea
         ref={textareaRef}
         autoFocus
-        className="outline-none ring-0 bg-transparent disabled:cursor-default w-full resize-none overflow-hidden"
+        className="outline-none ring-0 bg-transparent disabled:opacity-100 disabled:text-inherit w-full resize-none overflow-hidden text-black dark:text-white"
         value={gratitudeMessage}
         disabled={done}
         onChange={(e) => setGratitudeMessage(e.target.value)}
