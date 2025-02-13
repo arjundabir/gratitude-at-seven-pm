@@ -31,7 +31,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center absolute z-10 bottom-1 inset-x-0">
+    <div className="flex flex-col items-center justify-center">
       <p className="font-medium">gratitude at 7 pm</p>
       <p className="text-sm">
         updates in:{" "}

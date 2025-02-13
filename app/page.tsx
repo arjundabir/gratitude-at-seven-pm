@@ -1,3 +1,4 @@
+import CalendarIntegration from "@/components/calendar-integration";
 import Footer from "@/components/footer";
 import GratitudeContextProvider from "@/components/gratitude-context";
 import GratitudeInput from "@/components/gratitude-input";
@@ -14,6 +15,7 @@ export default async function Home() {
   return (
     <div className="h-svh w-full flex flex-col overflow-y-clip">
       <GratitudeContextProvider message={message}>
+        <CalendarIntegration />
         <div className="flex-1 flex flex-col items-center justify-center">
           <div className="flex items-start justify-center">
             <p className="mr-1">I&apos;m grateful for</p>
