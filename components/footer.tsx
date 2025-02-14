@@ -31,13 +31,13 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <footer className="flex flex-col items-center justify-center p-2">
       <p className="font-medium">gratitude at 7 pm</p>
       <p className="text-sm">
         updates in:{" "}
         <span className="text-gray-400 font-normal">{timeToNext7PM}</span>
       </p>
-    </div>
+    </footer>
   );
 };
 

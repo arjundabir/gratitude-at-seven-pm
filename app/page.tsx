@@ -13,7 +13,7 @@ export default async function Home() {
     : undefined;
 
   return (
-    <div className="h-svh w-full flex flex-col overflow-y-clip">
+    <div className="flex-1 w-full flex flex-col">
       <GratitudeContextProvider message={message}>
         <CalendarIntegration />
         <div className="flex-1 flex flex-col items-center justify-center">
@@ -24,7 +24,6 @@ export default async function Home() {
           <HelperText />
         </div>
       </GratitudeContextProvider>
-      <Footer />
     </div>
   );
 }

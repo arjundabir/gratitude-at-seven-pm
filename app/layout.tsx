@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -16,9 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased relative h-svh overflow-y-clip`}
+        className={`${inter.className} antialiased relative h-svh flex flex-col`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
