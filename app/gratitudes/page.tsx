@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import GratitudeMessages from "@/components/gratitude-messages";
 
+export const revalidate = 0;
+
 const GratitudesPage = async () => {
   const { data, error } = await supabase
     .from("gratitudeatsevenpm")
