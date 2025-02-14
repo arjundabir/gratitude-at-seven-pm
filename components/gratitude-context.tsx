@@ -4,6 +4,7 @@ import React, { createContext, useState, useEffect } from "react";
 interface GratitudeContextProviderProps {
   children: React.ReactNode;
   message?: string;
+  isPublic?: boolean;
 }
 
 export const GratitudeContext = createContext({
@@ -16,17 +17,18 @@ export const GratitudeContext = createContext({
     console.log(message, e);
   },
   done: true,
+  isPublic: false,
 });
 
 const GratitudeContextProvider = ({
   children,
   message,
+  isPublic,
 }: GratitudeContextProviderProps) => {
   const [done, setDone] = useState(message ? true : false);
   const [gratitudeMessage, setGratitudeMessage] = useState(message);
 
   useEffect(() => {
-    // Check for cookie expiration and updates every second
     const interval = setInterval(() => {
       const cookie = document.cookie
         .split("; ")
@@ -35,7 +37,6 @@ const GratitudeContextProvider = ({
         ? decodeURIComponent(cookie.split("=")[1])
         : "";
 
-      // Only clear message if we're in a done state (after submission)
       if (done) {
         if (!currentMessage && gratitudeMessage) {
           setGratitudeMessage("");
@@ -80,6 +81,7 @@ const GratitudeContextProvider = ({
         setGratitudeMessage,
         onSubmit,
         done,
+        isPublic: isPublic || false,
       }}
     >
       {children}

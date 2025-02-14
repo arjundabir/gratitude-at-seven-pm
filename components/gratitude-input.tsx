@@ -24,21 +24,23 @@ const GratitudeInput = () => {
   };
 
   return (
-    <form
-      onSubmit={(e) => onSubmit(gratitudeMessage, e)}
-      className="inline-flex"
-    >
-      <textarea
-        ref={textareaRef}
-        autoFocus
-        className="outline-none ring-0 bg-transparent disabled:opacity-100 disabled:text-inherit w-full resize-none overflow-hidden text-black dark:text-white"
-        value={gratitudeMessage}
-        disabled={done}
-        onChange={(e) => setGratitudeMessage(e.target.value)}
-        onKeyDown={handleKeyDown}
-        rows={1}
-      />
-    </form>
+    <div>
+      <form
+        onSubmit={(e) => onSubmit(gratitudeMessage, e)}
+        className="inline-flex"
+      >
+        <textarea
+          ref={textareaRef}
+          autoFocus
+          className="outline-none ring-0 bg-transparent disabled:opacity-100 disabled:text-inherit w-full resize-none overflow-hidden text-black dark:text-white"
+          value={gratitudeMessage}
+          disabled={done}
+          onChange={(e) => setGratitudeMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          rows={1}
+        />
+      </form>
+    </div>
   );
 };
 

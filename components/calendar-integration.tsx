@@ -93,7 +93,7 @@ const CalendarIntegration = () => {
   };
 
   return (
-    <div className="p-2 ml-auto">
+    <div className="ml-auto">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="text-sm underline px-2 py-1.5 focus:outline-none">
