@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Footer = () => {
@@ -32,7 +33,9 @@ const Footer = () => {
 
   return (
     <footer className="flex flex-col items-center justify-center p-2">
-      <p className="font-medium">gratitude at 7 pm</p>
+      <Link href="/" className="hover:underline">
+        <p className="font-medium">gratitude at 7 pm</p>
+      </Link>
       <p className="text-sm">
         updates in:{" "}
         <span className="text-gray-400 font-normal">{timeToNext7PM}</span>
