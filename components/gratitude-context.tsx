@@ -1,5 +1,6 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
+import { toast } from "sonner";
 
 interface GratitudeContextProviderProps {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ const GratitudeContextProvider = ({
 }: GratitudeContextProviderProps) => {
   const [done, setDone] = useState(message ? true : false);
   const [gratitudeMessage, setGratitudeMessage] = useState(message);
+  const [isPublicState, setIsPublicState] = useState(isPublic || false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,6 +53,41 @@ const GratitudeContextProvider = ({
     return () => clearInterval(interval);
   }, [gratitudeMessage, done]);
 
+  // Check for public cookie value
+  useEffect(() => {
+    const publicCookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("public="));
+    if (publicCookie) {
+      setIsPublicState(publicCookie.split("=")[1] === "true");
+    }
+  }, []);
+
+  const publishGratitude = async (message: string) => {
+    try {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({ message }),
+      });
+
+      if (response.ok) {
+        toast("Gratitude Published", {
+          description: "View yours, and others",
+          action: {
+            label: "View Gratitudes",
+            onClick: () => {
+              window.open("/gratitudes", "_blank");
+            },
+          },
+        });
+      } else {
+        console.error("Failed to publish gratitude");
+      }
+    } catch (error) {
+      console.error("Error publishing gratitude:", error);
+    }
+  };
+
   const onSubmit = async (message: string, e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -69,6 +106,11 @@ const GratitudeContextProvider = ({
       )};expires=${expires.toUTCString()};path=/`;
       setGratitudeMessage(message);
       setDone(true);
+
+      // If isPublic is true, automatically publish the gratitude
+      if (isPublicState) {
+        await publishGratitude(message);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -81,7 +123,7 @@ const GratitudeContextProvider = ({
         setGratitudeMessage,
         onSubmit,
         done,
-        isPublic: isPublic || false,
+        isPublic: isPublicState,
       }}
     >
       {children}
