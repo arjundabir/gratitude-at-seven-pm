@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const body = await request.json();
-  console.log(body);
   const message: string = body.message;
 
   try {
