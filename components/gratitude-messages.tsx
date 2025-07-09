@@ -83,7 +83,7 @@ const GratitudeMessages = ({ data }: { data: GratitudeMessagesProps[] }) => {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 overflow-y-auto">
       {gratitudeMessages.map(({ id, message }) => (
         <Badge variant="secondary" key={id}>
           {message}

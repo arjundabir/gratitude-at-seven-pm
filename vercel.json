@@ -1,0 +1,12 @@
+{
+    "crons": [
+        {
+            "path": "/api/cron/bot-messages",
+            "schedule": "0 19 * * *"
+        },
+        {
+            "path": "/api/cron/delete-messages",
+            "schedule": "59 18 * * *"
+        }
+    ]
+}
