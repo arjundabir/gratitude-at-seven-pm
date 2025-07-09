@@ -6,7 +6,7 @@
         },
         {
             "path": "/api/cron/delete-messages",
-            "schedule": "0 19 * * *"
+            "schedule": "59 18 * * *"
         }
     ]
 }

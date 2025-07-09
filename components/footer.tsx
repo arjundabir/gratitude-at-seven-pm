@@ -7,11 +7,11 @@ const Footer = () => {
   const calculateTimeToNext7PM = (): string => {
     const now: Date = new Date();
     const next7PM: Date = new Date();
-    next7PM.setHours(19, 0, 0, 0); // Set to 7 PM today
+    next7PM.setUTCHours(19, 0, 0, 0); // Set to 7 PM UTC today
 
-    if (now.getHours() >= 19) {
-      // If it's already past 7 PM today, set to 7 PM tomorrow
-      next7PM.setDate(next7PM.getDate() + 1);
+    if (now.getUTCHours() >= 19) {
+      // If it's already past 7 PM UTC today, set to 7 PM UTC tomorrow
+      next7PM.setUTCDate(next7PM.getUTCDate() + 1);
     }
 
     const diff: number = next7PM.getTime() - now.getTime(); // Difference in milliseconds

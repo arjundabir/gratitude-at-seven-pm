@@ -14,7 +14,7 @@ const GratitudesPage = async () => {
   }
 
   return (
-    <div className="h-svh w-full flex flex-col justify-center max-w-2xl mx-auto p-2">
+    <div className="h-[calc(100svh-60px)] w-full flex flex-col justify-center max-w-2xl mx-auto p-2">
       <p className="mr-1 max-w-lg text-left mb-1">I&apos;m grateful for:</p>
       <GratitudeMessages data={data} />
     </div>
