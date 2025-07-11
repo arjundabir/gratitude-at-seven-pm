@@ -9,12 +9,18 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const response = await supabaseClient
+  try{
+    await supabaseClient
     .from("gratitudeatsevenpm")
     .delete()
     .neq("id", -1);
 
-  return new Response("Gratitudes deleted", {
-    status: response.status,
-  });
+    return new Response("Gratitudes deleted", {
+      status: 200,
+    });
+  } catch {
+    return new Response("Error Deleting Gratitudes", {
+      status: 400
+    })
+  }
 }

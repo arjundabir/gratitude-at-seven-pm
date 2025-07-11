@@ -13,29 +13,24 @@ export async function GET(request: NextRequest) {
     });
   }
 
+  const totalMessages = Math.floor(Math.random() * 48) + 20;
+
   const { object } = await generateObject({
-    model: openai("gpt-4-turbo"),
+    model: openai("gpt-4o-mini"),
     schema: z.object({
-      messages: z.array(z.string()).length(25),
+      messages: z.array(z.string()).length(totalMessages),
     }),
     prompt: `
-    Create a list of 25 unique gratitude messages. Each message should be:
+    Generate ${totalMessages} unique gratitude messages that could complete the sentence: "I'm grateful for...".
 
-Under 100 characters
-
-Random in theme: include people, things, food, places, life moments, etc.
-
-For maximum of 5-10 of them, include a mix of names like Shrey, Mannat, Bardia, Meghaa, Arjun, Kiva, Ishan, Tanush, AP, Andrew, Quyen, Michele, Chris, and other common American and Indian names.
-
-For a medium amount of them, include really short responses like Waking up today, or lunch, or the sunset, to have varied lengths as well
-
-Sometimes refer to specific food or drinks (like boba, ramen, burritos, school, work).
-
-Occasionally mention real coffee shops or locations around Southern California (e.g., Philz, Sidecar Donuts, In-N-Out, Alfred Coffee, Laguna Beach).
-
-Avoid religious or political themes entirely.
-
-Make the tone warm, casual, and positive.
+Guidelines:
+- Each message must be under 50 characters.
+- Vary the length: include some that are just one word, some a few words, and some short phrases.
+- Cover a wide range of themes: people, objects, food, places, small joys, daily moments, nature, experiences, etc.
+- Do NOT include any religious, spiritual, or political references.
+- The tone should be warm, casual, positive, and occasionally humorous.
+- Avoid repeating ideas or phrasing.
+- Each message should stand alone as a way to finish the sentence.
     `,
   });
 
@@ -54,7 +49,7 @@ Make the tone warm, casual, and positive.
       status: 500,
     });
   } else
-    return new Response("Success. Inserted 100 messages", {
+    return new Response(`Success. Inserted ${totalMessages} messages`, {
       status: 201,
     });
 }
