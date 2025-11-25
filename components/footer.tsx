@@ -1,20 +1,31 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 const Footer = () => {
   const calculateTimeToNext7PM = (): string => {
     const now: Date = new Date();
-    const next7PM: Date = new Date();
-    next7PM.setUTCHours(19, 0, 0, 0); // Set to 7 PM UTC today
 
-    if (now.getUTCHours() >= 19) {
-      // If it's already past 7 PM UTC today, set to 7 PM UTC tomorrow
-      next7PM.setUTCDate(next7PM.getUTCDate() + 1);
+    // Get current time in Pacific timezone
+    const pacificNow = new Date(
+      now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })
+    );
+
+    // Create date for 7 PM Pacific today
+    const next7PM = new Date(pacificNow);
+    next7PM.setHours(19, 0, 0, 0);
+
+    // If it's already past 7 PM Pacific today, set to 7 PM Pacific tomorrow
+    if (pacificNow.getHours() >= 19) {
+      next7PM.setDate(next7PM.getDate() + 1);
     }
 
-    const diff: number = next7PM.getTime() - now.getTime(); // Difference in milliseconds
+    // Convert Pacific time back to UTC equivalent for calculation
+    const pacificOffset = now.getTime() - pacificNow.getTime();
+    const next7PMUTC = new Date(next7PM.getTime() + pacificOffset);
+
+    const diff: number = next7PMUTC.getTime() - now.getTime(); // Difference in milliseconds
     const hours: number = Math.floor(diff / (1000 * 60 * 60));
     const minutes: number = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds: number = Math.floor((diff % (1000 * 60)) / 1000);
@@ -37,7 +48,7 @@ const Footer = () => {
         <p className="font-medium">gratitude at 7 pm</p>
       </Link>
       <p className="text-sm">
-        updates in:{" "}
+        updates in:{' '}
         <span className="text-gray-400 font-normal">{timeToNext7PM}</span>
       </p>
     </footer>
